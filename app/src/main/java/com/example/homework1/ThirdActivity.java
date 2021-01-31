@@ -21,17 +21,10 @@ public class ThirdActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_third);
+
         Intent intent = getIntent();
-        String str = "";
-        ArrayList<String> content = intent.getStringArrayListExtra("content");
-        for (int i = 0; !content.get(i).equals("0"); i++) {
-            str += content.get(i);
-        }
-        linearLayout = findViewById(R.id.linearLayout2);
-        TextView textView = new TextView(this);
-        textView.setText(str);
-        textView.setTextSize(30);
-        linearLayout.addView(textView);
+        String str = getContent(intent);
+        addTextView(str);
 
         button_goHome = findViewById(R.id.button_goHome);
         button_goHome.setOnClickListener(new View.OnClickListener() {
@@ -41,6 +34,22 @@ public class ThirdActivity extends AppCompatActivity {
                 startActivity(intent1);
             }
         });
+    }
 
+    private String getContent (Intent intent) {
+        intent = getIntent();
+        String str = "";
+        ArrayList<String> content = intent.getStringArrayListExtra("content");
+        for (int i = 0; !content.get(i).equals("0"); i++) {
+            str += content.get(i);
+        }
+        return str;
+    }
+
+    private void addTextView (String str) {
+        TextView textView = new TextView(this);
+        textView.setText(str);
+        textView.setTextSize(30);
+        linearLayout.addView(textView);
     }
 }

@@ -38,25 +38,19 @@ public class MainActivity extends AppCompatActivity {
                 client.get(API_URL, new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                        // 200 status code
                         Log.d("API RESPONSE", new String(responseBody));
-
                         try {
                             JSONObject json = new JSONObject(new String(responseBody));
                             Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+
                             intent.putExtra("title", json.getString("title"));
-                            JSONArray blanks_json = json.getJSONArray("blanks");
-                            ArrayList<String> blanks_str = new ArrayList<>();
-                            for (int i = 0; i < blanks_json.length(); i++) {
-                                blanks_str.add(blanks_json.get(i).toString());
-                            }
+
+                            ArrayList<String> blanks_str = jsonArrtoStringAL(json.getJSONArray("blanks"));
                             intent.putStringArrayListExtra("blanks", blanks_str);
-                            JSONArray values_json = json.getJSONArray("value");
-                            ArrayList<String> values_str = new ArrayList<>();
-                            for (int i = 0; i < values_json.length(); i++) {
-                                values_str.add(values_json.get(i).toString());
-                            }
+
+                            ArrayList<String> values_str = jsonArrtoStringAL(json.getJSONArray("value"));
                             intent.putStringArrayListExtra("value", values_str);
+
                             startActivity(intent);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -70,5 +64,17 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    public ArrayList<String> jsonArrtoStringAL(JSONArray jsonArr) {
+        ArrayList<String> json_str = new ArrayList<>();
+        for (int i = 0; i < jsonArr.length(); i++) {
+            try {
+                json_str.add(jsonArr.get(i).toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return json_str;
     }
 }

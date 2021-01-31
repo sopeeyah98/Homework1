@@ -21,7 +21,7 @@ public class ThirdActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_third);
-
+        linearLayout = findViewById(R.id.linearLayout2);
         Intent intent = getIntent();
         String str = getContent(intent);
         addTextView(str);
@@ -37,7 +37,6 @@ public class ThirdActivity extends AppCompatActivity {
     }
 
     private String getContent (Intent intent) {
-        intent = getIntent();
         String str = "";
         ArrayList<String> content = intent.getStringArrayListExtra("content");
         for (int i = 0; !content.get(i).equals("0"); i++) {
